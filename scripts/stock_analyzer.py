@@ -1,5 +1,5 @@
-import csv
 import os
+import pandas as pd
 
 def main():
     base_dir = os.path.dirname(__file__)
@@ -9,43 +9,32 @@ def main():
         print("Error: Data file not found.")
         return
 
-    returns = []
-
     try:
-        with open(file_path, newline="") as csvfile:
-            reader = csv.DictReader(csvfile)
+        df = pd.read_csv(file_path)
 
-            for row in reader:
-                try:
-                    open_price = float(row["Open"])
-                    close_price = float(row["Close"])
-                except ValueError:
-                    print(f"Skipping invalid row: {row}")
-                    continue
+        # Convert Open and Close to numeric
+        df["Open"] = pd.to_numeric(df["Open"], errors="coerce")
+        df["Close"] = pd.to_numeric(df["Close"], errors="coerce")
 
-                daily_return = (close_price - open_price) / open_price
-                returns.append({
-                    "date": row["Date"],
-                    "return": daily_return
-                })
+        # Drop rows with missing or invalid data
+        df = df.dropna(subset=["Open", "Close"])
+
+        # Calculate daily return
+        df["Daily Return"] = (df["Close"] - df["Open"]) / df["Open"]
+
+        # Summary stats
+        average_return = df["Daily Return"].mean()
+        best_day = df.loc[df["Daily Return"].idxmax()]
+        worst_day = df.loc[df["Daily Return"].idxmin()]
+
+        print("Summary Statistics (pandas)")
+        print("---------------------------")
+        print(f"Average Daily Return: {average_return:.2%}")
+        print(f"Best Day: {best_day['Date']} ({best_day['Daily Return']:.2%})")
+        print(f"Worst Day: {worst_day['Date']} ({worst_day['Daily Return']:.2%})")
 
     except Exception as e:
         print(f"Unexpected error: {e}")
-        return
-
-    if not returns:
-        print("No valid data to analyze.")
-        return
-
-    average_return = sum(r["return"] for r in returns) / len(returns)
-    best_day = max(returns, key=lambda x: x["return"])
-    worst_day = min(returns, key=lambda x: x["return"])
-
-    print("Summary Statistics")
-    print("------------------")
-    print(f"Average Daily Return: {average_return:.2%}")
-    print(f"Best Day: {best_day['date']} ({best_day['return']:.2%})")
-    print(f"Worst Day: {worst_day['date']} ({worst_day['return']:.2%})")
 
 if __name__ == "__main__":
     main()
