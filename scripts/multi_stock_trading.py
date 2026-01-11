@@ -14,16 +14,16 @@ def main():
     df["Open"] = pd.to_numeric(df["Open"], errors="coerce")
     df["Close"] = pd.to_numeric(df["Close"], errors="coerce")
     df = df.dropna(subset=["Open", "Close"])
-
-    # Calculate daily return
     df["Daily Return"] = (df["Close"] - df["Open"]) / df["Open"]
 
-    cash = 10000  # starting cash
+    cash = 10000
     holdings = {}
     portfolio_history = []
 
-    print("Trading Log:")
-    print("------------")
+    STOP_LOSS = -0.03  # sell if daily return < -3%
+
+    print("Trading Log with Stop-Loss:")
+    print("---------------------------")
 
     for index, row in df.iterrows():
         stock = row["Stock"]
@@ -39,11 +39,17 @@ def main():
             cash -= 10 * close_price
             print(f"{row['Date']} {stock}: Bought 10 shares at {close_price}")
 
-        # Sell if return < 1%
+        # Sell if return < 1% (previous threshold)
         elif daily_return < 0.01 and holdings[stock] >= 5:
             holdings[stock] -= 5
             cash += 5 * close_price
             print(f"{row['Date']} {stock}: Sold 5 shares at {close_price}")
+
+        # Stop-loss: sell all shares if return < STOP_LOSS
+        elif daily_return < STOP_LOSS and holdings[stock] > 0:
+            cash += holdings[stock] * close_price
+            print(f"{row['Date']} {stock}: Stop-loss triggered, sold {holdings[stock]} shares at {close_price}")
+            holdings[stock] = 0
 
         # Track portfolio value
         portfolio_value = cash + sum(holdings[s] * df[df["Stock"] == s].iloc[:index+1]["Close"].iloc[-1] for s in holdings)
@@ -59,10 +65,10 @@ def main():
         print(f"{stock}: {shares} shares")
     print(f"Total Portfolio Value: ${portfolio_history[-1]['Portfolio Value']:.2f}")
 
-    # Plot portfolio value over time
+    # Plot portfolio value
     portfolio_df = pd.DataFrame(portfolio_history)
     plt.plot(portfolio_df["Date"], portfolio_df["Portfolio Value"], marker='o')
-    plt.title("Portfolio Value Over Time")
+    plt.title("Portfolio Value Over Time (with Stop-Loss)")
     plt.xlabel("Date")
     plt.ylabel("Portfolio Value ($)")
     plt.xticks(rotation=45)
