@@ -114,7 +114,9 @@ Total Portfolio Value: $9950.00
 
 Portfolio Value Chart:
 Screenshot
+
 ![Portfolio Value](images/portfolio_plot.png)
+
 
 
 Notes
