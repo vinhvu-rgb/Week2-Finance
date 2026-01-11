@@ -139,4 +139,3 @@ Beginner/intermediate finance/trading projects
 
 Portfolio-ready for employers
 
-
