@@ -113,9 +113,10 @@ GOOGL: 0 shares
 Total Portfolio Value: $9950.00
 
 Portfolio Value Chart:
-Screenshot
 
-![Portfolio Value](https://github.com/vinhvu-rgb/Week2-Finance/raw/main/images/portfolio_plot.png)
+![Portfolio Value](images/portfolio_plot.png)
+
+
 
 
 
