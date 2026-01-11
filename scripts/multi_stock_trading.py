@@ -1,5 +1,6 @@
 import os
 import pandas as pd
+import matplotlib.pyplot as plt
 
 def main():
     base_dir = os.path.dirname(__file__)
@@ -17,13 +18,13 @@ def main():
     # Calculate daily return
     df["Daily Return"] = (df["Close"] - df["Open"]) / df["Open"]
 
-    # Portfolio setup
     cash = 10000  # starting cash
-    holdings = {}  # stock symbol -> shares held
+    holdings = {}
+    portfolio_history = []
 
-    # Simulate trading per day per stock
     print("Trading Log:")
     print("------------")
+
     for index, row in df.iterrows():
         stock = row["Stock"]
         daily_return = row["Daily Return"]
@@ -32,27 +33,42 @@ def main():
         if stock not in holdings:
             holdings[stock] = 0
 
-        # Simple strategy:
-        # Buy 10 shares if daily return > 2%
+        # Buy if return > 2%
         if daily_return > 0.02 and cash >= 10 * close_price:
             holdings[stock] += 10
             cash -= 10 * close_price
             print(f"{row['Date']} {stock}: Bought 10 shares at {close_price}")
 
-        # Sell 5 shares if daily return < 1%
+        # Sell if return < 1%
         elif daily_return < 0.01 and holdings[stock] >= 5:
             holdings[stock] -= 5
             cash += 5 * close_price
             print(f"{row['Date']} {stock}: Sold 5 shares at {close_price}")
 
-    # Calculate final portfolio value
-    portfolio_value = cash + sum(holdings[s] * df[df["Stock"] == s].iloc[-1]["Close"] for s in holdings)
+        # Track portfolio value
+        portfolio_value = cash + sum(holdings[s] * df[df["Stock"] == s].iloc[:index+1]["Close"].iloc[-1] for s in holdings)
+        portfolio_history.append({
+            "Date": row["Date"],
+            "Portfolio Value": portfolio_value
+        })
 
+    # Final portfolio
     print("\nFinal Portfolio:")
     print(f"Cash: ${cash:.2f}")
     for stock, shares in holdings.items():
         print(f"{stock}: {shares} shares")
-    print(f"Total Portfolio Value: ${portfolio_value:.2f}")
+    print(f"Total Portfolio Value: ${portfolio_history[-1]['Portfolio Value']:.2f}")
+
+    # Plot portfolio value over time
+    portfolio_df = pd.DataFrame(portfolio_history)
+    plt.plot(portfolio_df["Date"], portfolio_df["Portfolio Value"], marker='o')
+    plt.title("Portfolio Value Over Time")
+    plt.xlabel("Date")
+    plt.ylabel("Portfolio Value ($)")
+    plt.xticks(rotation=45)
+    plt.grid(True)
+    plt.tight_layout()
+    plt.show()
 
 if __name__ == "__main__":
     main()
