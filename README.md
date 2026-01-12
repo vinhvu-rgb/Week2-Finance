@@ -19,7 +19,9 @@ This project simulates a portfolio over time and visualizes its performance usin
 Week2-Finance/
 ├── data/               # Input data files (e.g., CSV)
 ├── images/             # Generated plots
+│   └── portfolio_plot.png
 ├── scripts/            # Python scripts
+│   └── main.py
 ├── README.md           # Project documentation
 └── requirements.txt    # Python dependencies
 
@@ -85,6 +87,8 @@ python scripts/main.py
 
 **Figure 1:** Portfolio value over time
 
+> ⚠️ If the image does not display above, view it directly:  
+> 👉 [portfolio_plot.png](https://github.com/vinhvu-rgb/Week2-Finance/raw/main/images/portfolio_plot.png)
 
 ---
 
