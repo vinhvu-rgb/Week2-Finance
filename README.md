@@ -76,6 +76,7 @@ python scripts/main.py
 
 ## Results
 
+### Portfolio Over Time
 <p align="center">
   <img src="https://github.com/vinhvu-rgb/Week2-Finance/raw/main/images/portfolio_plot.png" 
        alt="Portfolio Value Over Time" 
@@ -84,8 +85,6 @@ python scripts/main.py
 
 **Figure 1:** Portfolio value over time
 
-> ⚠️ If the image does not display above, view it directly:  
-> 👉 [portfolio_plot.png](https://github.com/vinhvu-rgb/Week2-Finance/raw/main/images/portfolio_plot.png)
 
 ---
 
