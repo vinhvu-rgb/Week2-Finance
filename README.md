@@ -131,8 +131,6 @@ Here is the plot showing the portfolio value over time:
 
 
 
-
-
 Notes
 
 This project is designed for learning and demonstration purposes
