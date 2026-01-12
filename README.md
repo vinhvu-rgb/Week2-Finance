@@ -30,7 +30,7 @@ Week2-Finance/
 
 ---
 
-## Requirements
+## Requirement
 
 - **Python 3.14+**  
 - **pandas**  
