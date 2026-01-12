@@ -124,6 +124,11 @@ Here is the plot showing the portfolio value over time:
 
 **Figure 1:** Portfolio value over time
 
+---
+
+> ⚠️ If the image does not render above, you can view it directly: [portfolio_plot.png](images/portfolio_plot.png)
+
+
 
 
 
