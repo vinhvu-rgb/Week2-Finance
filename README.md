@@ -116,21 +116,12 @@ Portfolio Value Chart:
 
 # Portfolio Analysis
 
+
 Here is the plot showing the portfolio value over time:
 
-<p align="center">
-  ![Portfolio Value Over Time](./images/portfolio_plot.png)
-</p>
+![Portfolio Value Over Time](https://github.com/vinhvu-rgb/Week2-Finance/raw/main/images/portfolio_plot.png)
 
 **Figure 1:** Portfolio value over time
-
-> ⚠️ If the image still doesn’t render, you can view it directly here:  
-> 👉 [View portfolio_plot.png](https://github.com/vinhvu-rgb/Week2-Finance/blob/main/images/portfolio_plot.png)
-
-
-
-
-
 
 
 
