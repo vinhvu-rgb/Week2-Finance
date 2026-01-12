@@ -114,7 +114,16 @@ Total Portfolio Value: $9950.00
 
 Portfolio Value Chart:
 
-![Portfolio Portfolio Value Over Time](images/portfolio_plot.png)
+# Portfolio Analysis
+
+Here is the plot showing the portfolio value over time:
+
+<p align="center">
+  <img src="images/portfolio_plot.png" alt="Portfolio Value Over Time" width="600"/>
+</p>
+
+**Figure 1:** Portfolio value over time
+
 
 
 
